@@ -30,6 +30,7 @@ repositories {
 }
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
+    implementation("com.github.cliftonlabs:json-simple:3.1.0")
 }
 
 // Configure gradle-intellij-plugin plugin.

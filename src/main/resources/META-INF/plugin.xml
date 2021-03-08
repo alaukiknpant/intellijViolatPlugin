@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>com.github.alaukiknpant.intellijviolatplugin</id>
+    <id>de.thl.violat</id>
     <name>intellijViolatPlugin</name>
     <vendor>alaukiknpant</vendor>
 
@@ -7,13 +7,35 @@
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
 
+    Application Components for Violat
+    <application-components>
+        <component>
+            <implementation-class>plugin.linearizability.violat.pluginconfig.GlobalSettings</implementation-class>
+        </component>
+        <component>
+            <implementation-class>plugin.linearizability.violat.pluginconfig.DefaultConfigComponent</implementation-class>
+        </component>
+    </application-components>
+
+
+    Extensions for Violat
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.alaukiknpant.intellijviolatplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.alaukiknpant.intellijviolatplugin.services.MyProjectService"/>
+        <!--suppress PluginXmlValidity -->
+        <toolWindow id="Violat" icon="violatWindowLogo.svg" secondary="false" anchor="bottom" factoryClass="plugin.linearizability.violat.toolwindows.MainToolWindowFactory"/>
+        <projectService serviceImplementation="plugin.linearizability.violat.resultparsers.ResultParser"/>
+        <configurationType implementation="plugin.linearizability.violat.runstateconfig.ViolatConfigurationType"/>
+        <applicationConfigurable provider="plugin.linearizability.violat.pluginconfig.PluginConfigurableProvider" id="Violat" displayName="Violat"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.alaukiknpant.intellijviolatplugin.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+    <actions>
+        <group id="violat.menu" text="Violat" description="Violat Integration menu">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action id="violat.runaction" class="plugin.linearizability.violat.actions.RunAction" text="Run" description="Runs Violat">
+                <keyboard-shortcut keymap="$default" first-keystroke="control alt G" second-keystroke="R"/>
+            </action>
+            <action id="violat.settingsaction" class="plugin.linearizability.violat.actions.SettingsAction" text="Settings" description="Opens Violat settings"/>
+        </group>
+    </actions>
+
+
 </idea-plugin>
