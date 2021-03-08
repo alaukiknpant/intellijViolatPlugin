@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>de.thl.violat</id>
+    <id>plugin.linearizability.violat</id>
     <name>intellijViolatPlugin</name>
     <vendor>alaukiknpant</vendor>
 
@@ -10,10 +10,10 @@
     Application Components for Violat
     <application-components>
         <component>
-            <implementation-class>plugin.linearizability.violat.pluginconfig.GlobalSettings</implementation-class>
+            <implementation-class>com.github.alaukiknpant.intellijviolatplugin.pluginconfig.GlobalSettings</implementation-class>
         </component>
         <component>
-            <implementation-class>plugin.linearizability.violat.pluginconfig.DefaultConfigComponent</implementation-class>
+            <implementation-class>com.github.alaukiknpant.intellijviolatplugin.pluginconfig.DefaultConfigComponent</implementation-class>
         </component>
     </application-components>
 
@@ -21,19 +21,19 @@
     Extensions for Violat
     <extensions defaultExtensionNs="com.intellij">
         <!--suppress PluginXmlValidity -->
-        <toolWindow id="Violat" icon="violatWindowLogo.svg" secondary="false" anchor="bottom" factoryClass="plugin.linearizability.violat.toolwindows.MainToolWindowFactory"/>
-        <projectService serviceImplementation="plugin.linearizability.violat.resultparsers.ResultParser"/>
-        <configurationType implementation="plugin.linearizability.violat.runstateconfig.ViolatConfigurationType"/>
-        <applicationConfigurable provider="plugin.linearizability.violat.pluginconfig.PluginConfigurableProvider" id="Violat" displayName="Violat"/>
+        <toolWindow id="Violat" icon="violatWindowLogo.svg" secondary="false" anchor="bottom" factoryClass="com.github.alaukiknpant.intellijviolatplugin.toolwindows.MainToolWindowFactory"/>
+        <projectService serviceImplementation="com.github.alaukiknpant.intellijviolatplugin.resultparsers.ResultParser"/>
+        <configurationType implementation="com.github.alaukiknpant.intellijviolatplugin.runstateconfig.ViolatConfigurationType"/>
+        <applicationConfigurable provider="com.github.alaukiknpant.intellijviolatplugin.pluginconfig.PluginConfigurableProvider" id="Violat" displayName="Violat"/>
     </extensions>
 
     <actions>
         <group id="violat.menu" text="Violat" description="Violat Integration menu">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="violat.runaction" class="plugin.linearizability.violat.actions.RunAction" text="Run" description="Runs Violat">
+            <action id="violat.runaction" class="com.github.alaukiknpant.intellijviolatplugin.actions.RunAction" text="Run" description="Runs Violat">
                 <keyboard-shortcut keymap="$default" first-keystroke="control alt G" second-keystroke="R"/>
             </action>
-            <action id="violat.settingsaction" class="plugin.linearizability.violat.actions.SettingsAction" text="Settings" description="Opens Violat settings"/>
+            <action id="violat.settingsaction" class="com.github.alaukiknpant.intellijviolatplugin.actions.SettingsAction" text="Settings" description="Opens Violat settings"/>
         </group>
     </actions>
 
