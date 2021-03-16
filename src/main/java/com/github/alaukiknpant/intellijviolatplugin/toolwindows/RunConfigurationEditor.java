@@ -28,8 +28,6 @@ import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBPanel;
 
-import com.github.alaukiknpant.intellijviolatplugin.model.*;
-
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -53,7 +51,7 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
     private JBList<Checker> checkersJBList;
     private CollectionListModel<Checker> checkersListModel;
     private CollectionListModel<Testers> testersListModel;
-    private ViolatVersion selectedVersion; //the current selected version of the infer installation
+    private ViolatVersion selectedVersion; //the current selected version of the violat installation
     private Testers selectedTester; //the current selected version of the infer installation
    //paths
     private TextFieldWithBrowseButton artifactPathChooser;
@@ -69,19 +67,20 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
     private TextFieldWithBrowseButton ADTPathChooser;
     private JButton checkAndAddADTButton;
     private JButton clearADTButton;
+    private JCheckBox showAllViolationsCheckBox;
     private String pathToClass;
 
 
     private void setChosenFile(VirtualFile virtualFile) {
         VirtualFile parent = virtualFile.getParent();
         final Project project = ProjectUtil.guessCurrentProject(null);
-        System.out.println(project.getBasePath());
-        System.out.println("\n\n\n\n\n");
+//        System.out.println(project.getBasePath());
+//        System.out.println("\n\n\n\n\n");
         String qualifier = parent == null ? null : DirectoryIndex.getInstance(project).getPackageName(parent);
         qualifier = qualifier != null && qualifier.length() != 0 ? qualifier + '.' : "";
-        System.out.println(qualifier);
-        System.out.println(virtualFile.getPath());
-        System.out.println("\n\n\n\n\n");
+//        System.out.println(qualifier);
+//        System.out.println(virtualFile.getPath());
+//        System.out.println("\n\n\n\n\n");
         pathToClass = virtualFile.getPath();
         ADTPathChooser.setText(qualifier + FileUtil.getNameWithoutExtension(virtualFile.getName()));
     }
@@ -166,7 +165,7 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
 
                 PsiFile selectedFile = fileChooser.getSelectedFile();
                 if (selectedFile != null) {
-                    System.out.println(selectedFile.getName());
+//                    System.out.println(selectedFile.getName());
                     setChosenFile(selectedFile.getVirtualFile());
                 }
             }
@@ -214,11 +213,11 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
         // Check and Add ADT
         checkAndAddADTButton.addActionListener(e -> {
             final boolean success = GlobalSettings.getInstance().addClass(ADTPathChooser.getText());
-            System.out.println("In check and Add ADT button\n");
-            System.out.println(pathToClass);
+//            System.out.println("In check and Add ADT button\n");
+//            System.out.println(pathToClass);
             if(!success || pathToClass == null) showClassAddInstallationError();
             else {
-                System.out.println("ADT added sucessfully\n");
+//                System.out.println("ADT added sucessfully\n");
                 String packages = ADTPathChooser.getText();
                 addADTAndGenerateSpecs(packages);
 
@@ -233,6 +232,15 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
             }
         });
 
+
+        showAllViolationsCheckBox.setSelected(GlobalSettings.getInstance().isShowAllBugs());
+
+        showAllViolationsCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GlobalSettings.getInstance().negateShowAllBugs();
+            }
+        });
     }
 
     private void addADTAndGenerateSpecs(String packages) {
@@ -328,19 +336,20 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
     }
 
     @Override
-    protected void resetEditorFrom(@NotNull ViolatRunConfiguration inferRC) {
-        this.checkersListModel.replaceAll(inferRC.getLaunchOptions().getSelectedCheckers());
-//        this.reactiveModeJBCheckBox.setSelected(inferRC.getLaunchOptions().isReactiveMode());
-        reloadTesterComboBox(inferRC);
-        reloadInstallationComboBox(inferRC);
+    protected void resetEditorFrom(@NotNull ViolatRunConfiguration violatRC) {
+        this.checkersListModel.replaceAll(violatRC.getLaunchOptions().getSelectedCheckers());
+//        this.reactiveModeJBCheckBox.setSelected(violatRC.getLaunchOptions().isReactiveMode());
+        reloadTesterComboBox(violatRC);
+        reloadInstallationComboBox(violatRC);
 
-        this.selectedVersion = inferRC.getLaunchOptions().getSelectedInstallation().getVersion();
+        this.selectedVersion = violatRC.getLaunchOptions().getSelectedInstallation().getVersion();
     }
 
     @Override
     protected void applyEditorTo(@NotNull ViolatRunConfiguration violatRC) {
         if(this.violatInstallationComboBox.isEnabled()) violatRC.getLaunchOptions().setSelectedInstallation((ViolatInstallation) this.violatInstallationComboBox.getSelectedItem());
         if(this.testerComboBox.isEnabled()) violatRC.getLaunchOptions().setSelectedTester((Testers) this.testerComboBox.getSelectedItem());
+
 //        violatRC.getLaunchOptions().setUsingBuildTool((BuildTool) usingBuildToolComboBox.getSelectedItem());
 //        violatRC.getLaunchOptions().setAdditionalArgs(additionalArgsTextField.getText());
         violatRC.getLaunchOptions().setSelectedCheckers(this.checkersListModel.toList());
@@ -358,7 +367,7 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
 
 
 
-    private void reloadInstallationComboBox(ViolatRunConfiguration inferRC) {
+    private void reloadInstallationComboBox(ViolatRunConfiguration violatRC) {
         violatInstallationComboBox.setModel(
                 new DefaultComboBoxModel<>(
                         GlobalSettings.getInstance().getInstallations().toArray(new ViolatInstallation[0])
@@ -366,8 +375,8 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
         violatInstallationComboBox.setEnabled(true);
         violatInstallationComboBox.setVisible(true);
 
-        if(violatInstallationComboBox.getItemCount() > 0 && inferRC.getLaunchOptions().getSelectedInstallation() != null) {
-            violatInstallationComboBox.setSelectedItem(inferRC.getLaunchOptions().getSelectedInstallation());
+        if(violatInstallationComboBox.getItemCount() > 0 && violatRC.getLaunchOptions().getSelectedInstallation() != null) {
+            violatInstallationComboBox.setSelectedItem(violatRC.getLaunchOptions().getSelectedInstallation());
         }
         //Show the clickable warning if no Installation is configured
         if(violatInstallationComboBox.getItemCount() == 0) {
@@ -380,7 +389,7 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         super.mouseClicked(e);
-                        ShowSettingsUtil.getInstance().showSettingsDialog(inferRC.getProject(), PluginConfigurable.class);
+                        ShowSettingsUtil.getInstance().showSettingsDialog(violatRC.getProject(), PluginConfigurable.class);
                     }
                 });
                 installPanel.add(warningLabel);
@@ -392,7 +401,7 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
     }
 
 
-    private void reloadTesterComboBox(ViolatRunConfiguration inferRC) {
+    private void reloadTesterComboBox(ViolatRunConfiguration violatRunConfiguration) {
         testerComboBox.setModel(
                 new DefaultComboBoxModel<>(
                         GlobalSettings.getInstance().getAvailableTesters().toArray(new Testers[0])
@@ -400,8 +409,8 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
         testerComboBox.setEnabled(true);
         testerComboBox.setVisible(true);
 
-        if(testerComboBox.getItemCount() > 0 && inferRC.getLaunchOptions().getSelectedTester() != null) {
-            testerComboBox.setSelectedItem(inferRC.getLaunchOptions().getSelectedTester());
+        if(testerComboBox.getItemCount() > 0 && violatRunConfiguration.getLaunchOptions().getSelectedTester() != null) {
+            testerComboBox.setSelectedItem(violatRunConfiguration.getLaunchOptions().getSelectedTester());
         }
     }
 

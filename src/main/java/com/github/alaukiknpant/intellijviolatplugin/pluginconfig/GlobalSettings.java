@@ -26,6 +26,8 @@ public class GlobalSettings implements PersistentStateComponent<GlobalSettings> 
     @Property
     private boolean showConsole = false;
 
+    @Property
+    private boolean showAllBugs = false;
 
     @Property
     private String pathToSpecs;
@@ -41,6 +43,17 @@ public class GlobalSettings implements PersistentStateComponent<GlobalSettings> 
 
     @Property
     private List<Testers> availableTesters = Testers.getTesters();
+
+
+    public void negateShowAllBugs() {
+        this.showAllBugs = !this.showAllBugs;
+        System.out.println("Show all bugs is now:" + this.showAllBugs);
+    }
+
+    public boolean isShowAllBugs() {
+        return this.showAllBugs;
+
+    }
 
     public boolean addTester(Testers tester) {
         boolean added = false;

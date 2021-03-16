@@ -6,34 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Checker {
-    //DEFAULT SINCE VERSION 0.15.0
-    VALIDATOR("validator", Category.OPTIONAL, new ViolatVersion(0, 16, 0)),                               //validates if a given implementation is linearizable
-    HISTORIES("histories", Category.OPTIONAL, new ViolatVersion(0, 16, 0));          //prints possible histories of a given implementation
 
-    enum Category {DEFAULT, OPTIONAL, EXPERIMENTAL}
+    VALIDATOR("validator", Category.DEFAULT),                               //validates if a given implementation is linearizable
+    HISTORIES("histories", Category.INPROGRESS);          //prints possible histories of a given implementation
+
+    enum Category {DEFAULT, INPROGRESS}
 
     private String argument;
     private Category category;
-    private ViolatVersion sinceVersion;
 
-    Checker(String arg, Category category, ViolatVersion sinceVersion) {
+
+    Checker(String arg, Category category) {
         this.argument = arg;
         this.category = category;
-        this.sinceVersion = sinceVersion;
+
     }
 
     public String getActivationArgument() {
         return "-" + this.argument;
     }
 
-//    public String getDeactivationArgument() {
-//        return "--no-" + this.argument;
-//    }
-    public ViolatVersion getSinceVersion() {
-        return sinceVersion;
-    }
     public Boolean isDefault() {
         return this.category == Category.DEFAULT;
+    }
+    public Boolean isInProgress() {
+        return this.category == Category.INPROGRESS;
     }
     public String getName() {
         return super.toString();
@@ -43,10 +40,8 @@ public enum Checker {
         switch(this.category) {
             case DEFAULT:
                 return "[Default] " + super.toString();
-            case OPTIONAL:
-                return "[Optional] " + super.toString();
-            case EXPERIMENTAL:
-                return "[Experimental] " + super.toString();
+            case INPROGRESS:
+                return "[In Progress] " + super.toString();
         }
         return super.toString();
     }
@@ -71,7 +66,7 @@ public enum Checker {
     public static List<Checker> getMissingCheckers(List<Checker> checkers, ViolatVersion version) {
         List<Checker> missingCheckers = new ArrayList<>();
         for(Checker checker : Checker.values()) {
-            if(!checkers.contains(checker) && checker.getSinceVersion().compareTo(version) <= 0) missingCheckers.add(checker);
+            if(!checkers.contains(checker)) missingCheckers.add(checker);
         }
         return missingCheckers;
     }

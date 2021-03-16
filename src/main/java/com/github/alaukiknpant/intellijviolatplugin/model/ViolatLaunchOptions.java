@@ -23,6 +23,7 @@ public class ViolatLaunchOptions {
     private ViolatInstallation selectedInstallation;
     private List<Checker> selectedCheckers;
     private Testers selectedTester;
+    private String backend;
 
 
 
@@ -30,6 +31,7 @@ public class ViolatLaunchOptions {
         this.selectedInstallation = GlobalSettings.getInstance().getDefaultInstallation();
         this.selectedCheckers = Checker.getDefaultCheckers();
         this.availableTesters = Testers.getTesters();
+        this.backend = GlobalSettings.getInstance().getTester();
     }
 
     /**
@@ -38,11 +40,15 @@ public class ViolatLaunchOptions {
      */
     @NotNull
     public String buildViolatLaunchCmd(Project project) throws ExecutionException {
+        if (this.backend == "JCStress") throw new ExecutionException("Violat Execution failed: JCStress not available yet");
         if(this.selectedInstallation == null) throw new ExecutionException("Violat Execution failed: No Installation selected");
         if(!BuildToolChecker.returnInvalidInstallations()) throw new ExecutionException("Violat Execution failed: You do not have all the software pre-reqs(Java, Maven, Gradle)");
         if(this.selectedCheckers == null || this.selectedCheckers.isEmpty()) throw new ExecutionException("Violat Execution failed: No Checkers selected");
         if(this.selectedCheckers.size() > 1) throw new ExecutionException("Violat Execution failed: More than 1 Checkers Selected");
-
+        for (int i =0; i < selectedCheckers.size(); i++) {
+            Checker checker = selectedCheckers.get(i);
+            if (checker.isInProgress()) throw new ExecutionException("Violat Execution failed: HISTORIES feature not available yet");
+        }
         StringBuilder sb = new StringBuilder(this.selectedInstallation.getPath());
 
         //Checkers
@@ -68,6 +74,12 @@ public class ViolatLaunchOptions {
         if (!(selectedTester == null) && !selectedTester.isEmpty()) {
             sb.append("--tester").append(" ").append(selectedTester);
         }
+
+        final Boolean isShowAllBugs = GlobalSettings.getInstance().isShowAllBugs();
+        if (!isShowAllBugs) {
+            sb.append(" ").append("--max-programs").append(" ").append("1");
+        }
+
 
         String result = sb.toString() + " >&1 | tee result.txt";
 
