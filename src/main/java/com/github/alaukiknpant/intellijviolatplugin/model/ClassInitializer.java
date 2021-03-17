@@ -29,11 +29,6 @@ public class ClassInitializer {
         return null;
     }
 
-    /**
-     * Checks if the Infer Installation at the given path is valid.
-     * @param path Full path to the infer binary
-     * @return The Version if the installation is valid, otherwise null
-     */
     @Nullable
     public Boolean confirm(@NotNull String path) {
         if(path.contains(".")) {
@@ -57,7 +52,6 @@ public class ClassInitializer {
                 file.flush();
                 createdSpecFile = true;
             } catch (IOException e) {
-                System.out.println("Noo canot generate Specs \n\n\n\n\n");
                 e.printStackTrace();
             }
         }
@@ -78,13 +72,9 @@ public class ClassInitializer {
         String jarPath = pathToJarFolder + jarName;
         Process makeJarFolderProcess = new ProcessBuilder("mkdir", pathToJarFolder).start();
         makeJarFolderProcess.waitFor();
-
-
         Process artifactProcess = null;
         ProcessBuilder pb = new ProcessBuilder("jar", "cvf", jarPath, mainPackage);
         pb.directory(new File(basePath));
-        System.out.println(basePath);
-        System.out.println("\n\n\n\n\n");
         artifactProcess = pb.start();
         artifactProcess.waitFor();
         return jarPath;

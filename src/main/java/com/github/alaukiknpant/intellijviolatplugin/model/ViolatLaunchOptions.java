@@ -35,8 +35,7 @@ public class ViolatLaunchOptions {
     }
 
     /**
-     * Constructs the final infer launch command
-     * @return Infer Launch Command
+     * Returns Violats launch command
      */
     @NotNull
     public String buildViolatLaunchCmd(Project project) throws ExecutionException {

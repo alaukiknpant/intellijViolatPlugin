@@ -31,20 +31,19 @@ The requirements for the plugin are the same as that of Violat
 * [Maven](https://maven.apache.org/) project management tool
 * [Java Pathfinder](https://github.com/javapathfinder) available in your executable environment (in which JDK 8 is required)
 
-## Run Plugin in Docker
+## Test your ADTs for linearizability violations in a Docker container
 
-The plugin is Dockerized in order to make it completely portable and so that it can run anywhere. To build a docker image,
-follow the following steps:
-
-1. Clone the repository and navigate to the `intellijViolatPlugin` directory.
-2. ```cd violatdocker```
+The runtime environment required for the plugin can be found in [this](https://github.com/alaukiknpant/intellijViolatPlugin/blob/main/violatdocker/Dockerfile)
+Dockerfile. Once you download the plugin, you can checkout Intellij's [recources](https://www.jetbrains.com/help/idea/running-a-java-app-in-a-container.html)
+on how to run your Java application in a container with a specific runtime environment.
 
 
 ## FAQs
 
 #### 1. How to add Java Pathfinder executable to your path
 
-Clone [jpf-core](https://github.com/javapathfinder/jpf-core)
+Clone [jpf-core](https://github.com/javapathfinder/jpf-core) and checkout [this](http://javapathfinder.sourceforge.net/Running_JPF.html)
+article.
 
 
 

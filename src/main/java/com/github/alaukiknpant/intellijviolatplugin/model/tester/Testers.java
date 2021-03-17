@@ -13,7 +13,6 @@ public enum Testers {
 
     private String cmnd;
 
-
     Testers(String cmnd) {
         this.cmnd = cmnd;
     }
@@ -21,11 +20,6 @@ public enum Testers {
     public String getName() {
         return this.cmnd;
     }
-
-    public String getActivationArgument() {
-        return "--tester" + " " + this.cmnd;
-    }
-
 
     @NotNull
     public static List<Testers> getTesters() {

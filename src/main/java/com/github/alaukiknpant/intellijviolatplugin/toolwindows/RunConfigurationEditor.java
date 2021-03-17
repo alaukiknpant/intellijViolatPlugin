@@ -51,8 +51,8 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
     private JBList<Checker> checkersJBList;
     private CollectionListModel<Checker> checkersListModel;
     private CollectionListModel<Testers> testersListModel;
-    private ViolatVersion selectedVersion; //the current selected version of the violat installation
-    private Testers selectedTester; //the current selected version of the infer installation
+    private ViolatVersion selectedVersion;
+    private Testers selectedTester;
    //paths
     private TextFieldWithBrowseButton artifactPathChooser;
     private TextFieldWithBrowseButton JSONpathChooser;
@@ -262,9 +262,6 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
     }
 
 
-    // We do not have a JB box yet
-//        showInferConsoleJBCheckBox.addActionListener(e -> artifactModified = true);
-
 
 
 //    private void refreshInstallationList() {
@@ -419,10 +416,7 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
     private void checkersAddAction(final AnActionButton button) {
         if(violatInstallationComboBox.getSelectedItem() == null) return;
 
-        final ViolatVersion usingVersion = ((ViolatInstallation) violatInstallationComboBox.getSelectedItem()).getVersion().isValid() ?
-                ((ViolatInstallation) violatInstallationComboBox.getSelectedItem()).getVersion() :
-                new ViolatVersion(1, 16, 0); //fallback to oldest supported version if no valid version is selected
-        final List<Checker> notSelectedCheckers = Checker.getMissingCheckers(checkersListModel.getItems(), usingVersion);
+        final List<Checker> notSelectedCheckers = Checker.getMissingCheckers(checkersListModel.getItems());
 
         JBPopupFactory.getInstance()
                 .createPopupChooserBuilder(notSelectedCheckers)

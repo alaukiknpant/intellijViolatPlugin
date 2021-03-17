@@ -39,9 +39,9 @@ public class ViolatConfigurationFactory extends ConfigurationFactory {
     @Nullable
     public static RunnerAndConfigurationSettings createValidConfiguration(RunManagerImpl runManager, String name) {
         if(!GlobalSettings.getInstance().hasValidInstallation()) return null;
-        final ConfigurationFactory inferFactory = runManager.getFactory("ViolatRunConfiguration", "Violat configuration factory");
-        if(inferFactory != null) {
-            RunnerAndConfigurationSettings rcs = runManager.createConfiguration(name, inferFactory);
+        final ConfigurationFactory violatFactory = runManager.getFactory("ViolatRunConfiguration", "Violat configuration factory");
+        if(violatFactory != null) {
+            RunnerAndConfigurationSettings rcs = runManager.createConfiguration(name, violatFactory);
             ViolatRunConfiguration violatRunConfig = (ViolatRunConfiguration) rcs.getConfiguration();
             violatRunConfig.getLaunchOptions().setSelectedInstallation(GlobalSettings.getInstance().getAnyValidInstallation());
             return rcs;

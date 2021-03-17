@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @State(name = "ViolatApplicationSettings", storages = {@Storage("$APP_CONFIG$/violat.xml")})
-//@State(name = "InferApplicationSettings", storages = {@Storage("$APP_CONFIG$/infer.xml")})
 public class GlobalSettings implements PersistentStateComponent<GlobalSettings> {
 
     @Property

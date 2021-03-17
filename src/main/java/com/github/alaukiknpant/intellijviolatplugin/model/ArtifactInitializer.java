@@ -1,7 +1,5 @@
 package com.github.alaukiknpant.intellijviolatplugin.model;
 
-
-
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,11 +21,6 @@ public class ArtifactInitializer {
         return null;
     }
 
-    /**
-     * Checks if the Infer Installation at the given path is valid.
-     * @param path Full path to the infer binary
-     * @return The Version if the installation is valid, otherwise null
-     */
     @Nullable
     public Boolean confirm(@NotNull String path) {
         if(path.endsWith(".jar")) {

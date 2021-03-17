@@ -56,14 +56,8 @@ public enum Checker {
         return defaultChecker;
     }
 
-    /**
-     * Gets a List of Checkers supported by the given version and not included in the given list.
-     * @param checkers The given list of checkers
-     * @param version The given version
-     * @return A diff of the given checkers list and all checkers for this version
-     */
     @NotNull
-    public static List<Checker> getMissingCheckers(List<Checker> checkers, ViolatVersion version) {
+    public static List<Checker> getMissingCheckers(List<Checker> checkers) {
         List<Checker> missingCheckers = new ArrayList<>();
         for(Checker checker : Checker.values()) {
             if(!checkers.contains(checker)) missingCheckers.add(checker);

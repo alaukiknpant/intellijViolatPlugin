@@ -65,13 +65,6 @@ public class ViolatRunConfiguration extends RunConfigurationBase {
             Checker checker = selectedCheckers.get(i);
             if (checker.isInProgress()) throw new RuntimeConfigurationException("HISTORIES feature not available yet");
         }
-
-
-
-
-
-
-
     }
 
     @Nullable

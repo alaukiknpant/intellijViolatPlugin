@@ -31,9 +31,9 @@ public class SettingsForm {
 
     private JPanel mainPanel;
     private TextFieldWithBrowseButton pathChooser;
-    private JBLabel getInferHereJBLabel;
+    private JBLabel getViolatHereJBLabel;
     private JButton addAndCheckInstallationButton;
-    private JBCheckBox showInferConsoleJBCheckBox;
+    private JBCheckBox showViolatConsoleJBCheckBox;
     private JBPanel validInstallationsPanel;
     private JPanel listWithToolBox;
     private TitledSeparator newViolatInstallation;
@@ -46,7 +46,7 @@ public class SettingsForm {
     private boolean modified = false;
 
     public SettingsForm() {
-        getInferHereJBLabel.setForeground(new JBColor(0x0645AD, 0x0652FF));
+        getViolatHereJBLabel.setForeground(new JBColor(0x0645AD, 0x0652FF));
 
         //CLicked on the File Chooser Icon by the text box
         pathChooser.addActionListener(e ->
@@ -63,7 +63,7 @@ public class SettingsForm {
         });
 
         //Clicked on the get infer link
-        getInferHereJBLabel.addMouseListener(new MouseAdapter() {
+        getViolatHereJBLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
@@ -84,7 +84,7 @@ public class SettingsForm {
             else showAddInstallationError();
         });
 
-        showInferConsoleJBCheckBox.addActionListener(e -> modified = true);
+        showViolatConsoleJBCheckBox.addActionListener(e -> modified = true);
     }
 
     private void showAddInstallationError() {
@@ -145,9 +145,9 @@ public class SettingsForm {
         this.pathChooser.setText(path);
     }
     public boolean isShowConsole() {
-        return showInferConsoleJBCheckBox.isSelected();
+        return showViolatConsoleJBCheckBox.isSelected();
     }
     public void setShowConsole(boolean selected) {
-        showInferConsoleJBCheckBox.setSelected(selected);
+        showViolatConsoleJBCheckBox.setSelected(selected);
     }
 }

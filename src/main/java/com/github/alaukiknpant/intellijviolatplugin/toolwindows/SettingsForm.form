@@ -55,7 +55,7 @@
           <text resource-bundle="strings" key="new.violat.installation"/>
         </properties>
       </component>
-      <component id="cc90a" class="com.intellij.ui.components.JBLabel" binding="getInferHereJBLabel" default-binding="true">
+      <component id="cc90a" class="com.intellij.ui.components.JBLabel" binding="getViolatHereJBLabel" default-binding="true">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -84,7 +84,7 @@
               <text resource-bundle="strings" key="miscellaneous"/>
             </properties>
           </component>
-          <component id="ed119" class="com.intellij.ui.components.JBCheckBox" binding="showInferConsoleJBCheckBox" default-binding="true">
+          <component id="ed119" class="com.intellij.ui.components.JBCheckBox" binding="showViolatConsoleJBCheckBox" default-binding="true">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>

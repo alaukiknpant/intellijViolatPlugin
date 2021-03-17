@@ -27,11 +27,6 @@ public class ResultParser {
             return ServiceManager.getService(project, ResultParser.class);
         }
 
-        /**
-         * Parses a given violat result.txt file, it in the {@link ResultParser}. The result file has 'result.txt' as the default name. The Violat ToolWindow is notified, so it can show the parsed results.
-         * @param resultPath The Path of the file in the txt format
-         * @return A Map of the rearranged Results. Mainly for testing purposes. Is null when the file doesnt exist.
-         */
         public Map<Integer, String> parse(Path resultPath) {
             if(!Files.exists(Paths.get(String.valueOf(resultPath)))) {
                 log.warn("result.txt does not exist - aborting parsing");
@@ -46,23 +41,13 @@ public class ResultParser {
             return null;
         }
 
-        /**
-         * Reads a report.json from an Infer analysis and deserializes it into a list of InferBug objects
-         * @param path The Path of the result.txt
-         * @return A list of Violations
-         * @throws IOException If the text file couldn't be read
-         */
+
         private ArrayList<String> readViolationList(Path path) throws IOException {
             ResultFileReader result = new ResultFileReader(path.toString());
             ArrayList<String> resList = result.returnViolationList();
             return resList;
         }
 
-        /**
-         * Rearranges the buglist from the format infer delivers to a map with the filenames as keys and a list of bugs from that file as value
-         * @param violationList The buglist, deserialized from the infer report.json
-         * @return
-         */
         private void changeViolationMap(List<String> violationList) {
             System.out.println("HEre in Violation Map");
             Map<Integer, String> map = new HashMap<>();

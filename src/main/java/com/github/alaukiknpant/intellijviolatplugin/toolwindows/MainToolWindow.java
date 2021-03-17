@@ -63,10 +63,7 @@ public class MainToolWindow {
         return MainToolWindowContent;
     }
 
-    /**
-     * Draws the given bugMap to the Infer Tool Window
-     * @param bugMap keys are filenames, while the values are lists of infer bugs
-     */
+
     private void drawBugTree(Map<Integer,String> bugMap) {
         if(bugMap == null) return;
 

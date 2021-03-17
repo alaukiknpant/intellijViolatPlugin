@@ -28,13 +28,6 @@ public class ViolatInstallation implements Serializable {
         setDefaultInstall(defaultInstall);
     }
 
-
-    /**
-     * Creates a new Infer Installation and checks if its working.
-     * @param path The path of the root directory of the infer installation.
-     * @param isDefault if the installation which should be created is a default one
-     * @return An infer installation, or null if its not valid/working.
-     */
     @Nullable
     public static ViolatInstallation createViolatInstallation(String path, boolean isDefault) {
         ViolatInstallation ii = new ViolatInstallation(path, isDefault);
@@ -42,10 +35,6 @@ public class ViolatInstallation implements Serializable {
         return null;
     }
 
-    /**
-     * Checks if this Installation is valid and gets the version.
-     * @return true, if there is a valid infer installation in {@link #path}
-     */
     private boolean confirm() {
         this.version = checkViolat(this.getPath());
         if(this.version != null) setConfirmedWorking(true);
@@ -55,52 +44,36 @@ public class ViolatInstallation implements Serializable {
         return confirmedWorking;
     }
 
-    /**
-     * Checks if the Infer Installation at the given path is valid.
-     * @param path Full path to the infer binary
-     * @return The Version if the installation is valid, otherwise null
-     */
     @Nullable
     public ViolatVersion checkViolat(@NotNull String path) {
         try {
-            Process inferProcess = new ProcessBuilder(path , "--version").start();
-            System.out.println("In CheckViolat\n");
+            Process violatVersion = new ProcessBuilder(path , "--version").start();
             StringBuilder output = new StringBuilder();
-
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(inferProcess.getInputStream()));
-
+                    new InputStreamReader(violatVersion.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
                 output.append(line + "\n");
             }
-
             reader.close();
 
-            inferProcess.waitFor(PROCESS_TIMEOUT, TimeUnit.MILLISECONDS);
+            violatVersion.waitFor(PROCESS_TIMEOUT, TimeUnit.MILLISECONDS);
 
-            System.out.println("In CheckViolat - Violat version: " + output);
             String strMain = output.toString();
             String[] arrSplit = strMain.split("\\.");
-//            System.out.println(Integer.parseInt(arrSplit[0]));
-//            System.out.println(arrSplit[1]);
-//            System.out.println(arrSplit[2]);
 
-
-            if (inferProcess.exitValue() == 0) {
+            if (violatVersion.exitValue() == 0) {
                 try {
                     int major = Integer.parseInt(arrSplit[0].trim());
                     int minor = Integer.parseInt(arrSplit[1].trim());
                     int patch = Integer.parseInt(arrSplit[2].trim());
                     return new ViolatVersion(major, minor, patch);
 
-
-//                    return new Gson().fromJson(output.toString(), ViolatVersion.class);
                 } catch(JsonSyntaxException ex) {
                     return null;
                 }
             }
-        } catch(IOException | IllegalThreadStateException ex) { //IllegalThreadStateException means the timeout elapsed without infer finishing returning the version
+        } catch(IOException | IllegalThreadStateException ex) { //IllegalThreadStateException refers to Violat not returning the correct version
             return null;
         } catch(InterruptedException ex) {
             ex.printStackTrace();
@@ -118,8 +91,7 @@ public class ViolatInstallation implements Serializable {
     }
 
     public void setPath(String path) {
-        //make sure that the path is to a binary, not the directory of infer
-        if(path.endsWith("violat") || path.endsWith(".bat") || path.endsWith(".sh")) this.path = path; //Exception: .bat and .sh endings are used for testing purposes, they shouldn't be changed
+        if(path.endsWith("violat")) this.path = path;
         else this.path = path + "/bin/violat";
     }
 

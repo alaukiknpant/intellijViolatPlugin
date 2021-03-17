@@ -50,19 +50,10 @@ public class ResultFileReader {
 
         for (int i=0; i < violationList.length; i++){
             if (i> 0) {
-                System.out.println("--------------------------\n");
                 vioList.add(violationList[i]);
-                System.out.println(violationList[i]);
-                System.out.println("--------------------------\n");
             }
         }
         return vioList;
     }
-
-    public static void main(String args[]) throws IOException {
-        ResultFileReader result = new ResultFileReader("/Users/alaukik/Desktop/result.txt");
-        ArrayList<String> resList = result.returnViolationList();
-    }
-
 }
 
