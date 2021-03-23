@@ -1,4 +1,4 @@
-# IntellijViolatPlugin
+# Violat Integration
  
 ---
 #### This project automates linearizability violation detection in Java ADTs into Intellij IDE using [Violat](https://github.com/michael-emmi/violat)

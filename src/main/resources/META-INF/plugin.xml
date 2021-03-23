@@ -1,11 +1,12 @@
 <idea-plugin>
     <id>plugin.linearizability.violat</id>
-    <name>intellijViolatPlugin</name>
+    <name>ViolatIntegration</name>
     <vendor>alaukiknpant</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+
 
     Application Components for Violat
     <application-components>
@@ -31,7 +32,7 @@
         <group id="violat.menu" text="Violat" description="Violat Integration menu">
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action id="violat.runaction" class="com.github.alaukiknpant.intellijviolatplugin.actions.RunAction" text="Run" description="Runs Violat">
-                <keyboard-shortcut keymap="$default" first-keystroke="control alt G" second-keystroke="R"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="control alt K" second-keystroke="U"/>
             </action>
             <action id="violat.settingsaction" class="com.github.alaukiknpant.intellijviolatplugin.actions.SettingsAction" text="Settings" description="Opens Violat settings"/>
         </group>

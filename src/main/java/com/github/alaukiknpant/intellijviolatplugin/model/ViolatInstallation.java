@@ -91,7 +91,7 @@ public class ViolatInstallation implements Serializable {
     }
 
     public void setPath(String path) {
-        if(path.endsWith("violat")) this.path = path;
+        if(path.endsWith("violat") || path.endsWith(".bat")) this.path = path;
         else this.path = path + "/bin/violat";
     }
 

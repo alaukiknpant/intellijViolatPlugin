@@ -165,7 +165,7 @@ public class GlobalSettings implements PersistentStateComponent<GlobalSettings> 
     public boolean addInstallation(String path, boolean isDefault) {
         //check if a default installation already exists
 
-        if(isDefault && this.getInstallations().stream().anyMatch(ViolatInstallation::isDefaultInstall)) return false;
+//        if(isDefault && this.getInstallations().stream().anyMatch(ViolatInstallation::isDefaultInstall)) return false;
 
         ViolatInstallation ii = ViolatInstallation.createViolatInstallation(path, isDefault);
 

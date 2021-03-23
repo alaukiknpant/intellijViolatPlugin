@@ -43,5 +43,5 @@ ENV PATH=$PATH:/usr/lib/JPF/jpf-core/bin
 # Copy the code in a code directory
 RUN mkdir /usr/code
 WORKDIR /usr/code
-RUN git clone https://github.com/alaukiknpant/intellijViolatPlugin.git
-RUN git clone https://github.com/alaukiknpant/linearizabilityTests.git
+#RUN git clone https://github.com/alaukiknpant/intellijViolatPlugin.git
+#RUN git clone https://github.com/alaukiknpant/linearizabilityTests.git

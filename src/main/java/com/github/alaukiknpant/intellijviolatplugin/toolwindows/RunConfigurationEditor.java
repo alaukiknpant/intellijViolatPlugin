@@ -13,7 +13,7 @@ import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
-import com.intellij.openapi.roots.impl.DirectoryIndex;
+import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.util.io.FileUtil;
@@ -75,8 +75,11 @@ public class RunConfigurationEditor extends SettingsEditor<ViolatRunConfiguratio
         VirtualFile parent = virtualFile.getParent();
         final Project project = ProjectUtil.guessCurrentProject(null);
 //        System.out.println(project.getBasePath());
-//        System.out.println("\n\n\n\n\n");
-        String qualifier = parent == null ? null : DirectoryIndex.getInstance(project).getPackageName(parent);
+        System.out.println("check1\n\n\n\n\n");
+        System.out.println(ProjectFileIndex.getInstance(project).getPackageNameByDirectory(parent));
+        // Previous
+//        String qualifier = parent == null ? null : DirectoryIndex.getInstance(project).getPackageName(parent);
+        String qualifier = parent == null ? null : ProjectFileIndex.getInstance(project).getPackageNameByDirectory(parent);
         qualifier = qualifier != null && qualifier.length() != 0 ? qualifier + '.' : "";
 //        System.out.println(qualifier);
 //        System.out.println(virtualFile.getPath());
