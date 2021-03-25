@@ -5,8 +5,8 @@
  
 ---
 ![Build](https://github.com/alaukiknpant/intellijViolatPlugin/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/16338-intellijviolatplugin)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/16338-intellijviolatplugin)
+[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/16397-violatintegration)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/16397-violatintegration/)
 
 
 <!-- Plugin description -->
@@ -69,6 +69,9 @@ article.
 [comment]: <> (This specific section is a source for the [plugin.xml]&#40;/src/main/resources/META-INF/plugin.xml&#41; file which will be extracted by the [Gradle]&#40;/build.gradle.kts&#41; during the build process.)
 
 [comment]: <> (To keep everything working, do not remove `<!-- ... -->` sections. )
+
+[comment]: <> (permanent token : perm:YWxhdWtpa25wYW50.OTItMzU5OQ==.l9YyahDD9Vqqj2Iu4O7g0wtlrrzIs9)
+
 
 <!-- Plugin description end -->
 
