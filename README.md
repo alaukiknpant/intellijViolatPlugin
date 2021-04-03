@@ -5,8 +5,8 @@
  
 ---
 ![Build](https://github.com/alaukiknpant/intellijViolatPlugin/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/16397-violatintegration)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/16397-violatintegration/)
+[![Version](https://img.shields.io/jetbrains/plugin/v/16397.svg)](https://plugins.jetbrains.com/plugin/16397-violatintegration)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/16397.svg)](https://plugins.jetbrains.com/plugin/16397-violatintegration/)
 
 
 <!-- Plugin description -->
