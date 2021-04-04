@@ -31,12 +31,27 @@ The requirements for the plugin are the same as that of Violat
 * [Maven](https://maven.apache.org/) project management tool
 * [Java Pathfinder](https://github.com/javapathfinder) available in your executable environment (in which JDK 8 is required)
 
-## Test your ADTs for linearizability violations in a Docker container
+## Run Plugin Instance in Docker During Development
 
-The runtime environment required for the plugin can be found in [this](https://github.com/alaukiknpant/intellijViolatPlugin/blob/main/violatdocker/Dockerfile)
-Dockerfile. Once you download the plugin, you can checkout Intellij's [recources](https://www.jetbrains.com/help/idea/running-a-java-app-in-a-container.html)
-on how to run your Java application in a container with a specific runtime environment.
+The plugin is Dockerized in order to make it completely portable and so that it can run anywhere. To build a docker image,
+follow the following steps:
 
+1. Clone the repository and navigate to the `intellijViolatPlugin` directory.
+2. ```cd violat docker```
+3. To run UI apps on our linux images from non-linux OS, you'll need to setup a graphics library first as described
+   [here](https://cuneyt.aliustaoglu.biz/en/running-gui-applications-in-docker-on-windows-linux-mac-hosts/). We will
+   describe the process for Mac here:
+
+   ### Mac
+   I. Download [xQuartz](https://www.xquartz.org/): a X.Org X Window System that runs on OS X.
+
+   II. Open xQuartz, and find your local IP address using ```ipconfig``` or from your network preferences as described [here](https://cuneyt.aliustaoglu.biz/en/running-gui-applications-in-docker-on-windows-linux-mac-hosts/)
+
+   III. ```xhost + <your local IP adress>```
+
+   IV. ```docker run --rm -e DISPLAY=<you local IP address>:0 -v /tmp/.X11-unix:/tmp/.X11-unix aliustaoglu/firefox```
+
+Find the set-up for Windows [here]([here](https://cuneyt.aliustaoglu.biz/en/running-gui-applications-in-docker-on-windows-linux-mac-hosts/)).
 
 ## FAQs
 

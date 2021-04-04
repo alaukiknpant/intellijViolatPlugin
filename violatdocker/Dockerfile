@@ -16,6 +16,7 @@ RUN unzip gradle-6.5.1-bin.zip
 ENV GRADLE_HOME=/gradle/gradle-6.5.1
 ENV PATH=$PATH:$GRADLE_HOME/bin
 
+
 # Download java 8(!)
 RUN apt-get install -y openjdk-8-jdk
 
@@ -28,6 +29,7 @@ RUN git clone https://github.com/javapathfinder/jpf-core
 RUN mkdir /root/.jpf
 RUN echo 'jpf-core = /usr/lib/JPF/jpf-core' >> /root/.jpf/site.properties
 RUN echo 'extensions=${jpf-core}' >> /root/.jpf/site.properties
+
 
 # Build jpf
 WORKDIR /usr/lib/JPF/jpf-core
@@ -43,5 +45,38 @@ ENV PATH=$PATH:/usr/lib/JPF/jpf-core/bin
 # Copy the code in a code directory
 RUN mkdir /usr/code
 WORKDIR /usr/code
-#RUN git clone https://github.com/alaukiknpant/intellijViolatPlugin.git
-#RUN git clone https://github.com/alaukiknpant/linearizabilityTests.git
+RUN git clone https://github.com/alaukiknpant/intellijViolatPlugin.git
+RUN git clone https://github.com/alaukiknpant/linearizabilityTests.git
+
+# Setup Intellj Environment
+
+ARG IDEA_VERSION=2020.3
+ARG IDEA_BUILD=2020.3.2
+
+RUN  \
+  apt-get update && apt-get install --no-install-recommends -y \
+  gcc git openssh-client less \
+  libxtst-dev libxext-dev libxrender-dev libfreetype6-dev \
+  libfontconfig1 libgtk2.0-0 libxslt1.1 libxxf86vm1 \
+  && rm -rf /var/lib/apt/lists/* \
+  && useradd -ms /bin/bash developer
+
+ARG idea_source=https://download.jetbrains.com/idea/ideaIC-${IDEA_BUILD}.tar.gz
+ARG idea_local_dir=.IdeaIC${IDEA_VERSION}
+
+WORKDIR /opt/idea
+
+RUN curl -fsSL $idea_source -o /opt/idea/installer.tgz \
+  && tar --strip-components=1 -xzf installer.tgz \
+  && rm installer.tgz
+
+USER developer
+ENV HOME /home/developer
+
+RUN mkdir /home/developer/.Idea \
+  && ln -sf /home/developer/.Idea /home/developer/$idea_local_dir
+
+USER root
+WORKDIR /usr/code
+
+CMD [ "/opt/idea/bin/idea.sh" ]
